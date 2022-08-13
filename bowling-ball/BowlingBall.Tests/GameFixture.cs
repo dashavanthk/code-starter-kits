@@ -1,4 +1,6 @@
 ﻿using System;
+using BowlingBall.Exceptions;
+using BowlingBall.Track;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace BowlingBall.Tests
@@ -6,11 +8,21 @@ namespace BowlingBall.Tests
     [TestClass]
     public class GameFixture
     {
-        private Game game;
+        private IGame game;
+        private ITrackPins track;
+
+
         [TestInitialize]
         public void Initialize()
         {
-            game = new Game();
+            track = new TrackPins();
+            game = new Game(track);
+        }
+
+        [TestCleanup]
+        public void NewGame()
+        {
+            game.NewGame(); 
         }
 
         [TestMethod]
@@ -50,8 +62,61 @@ namespace BowlingBall.Tests
         [TestMethod]
         public void Can_Roll_All_Strike()
         {
-            Rolls(10, 12);
+            Rolls(10, 9);
+            game.LastRoll(10,10,10);
             Assert.AreEqual(300, game.GetScore());
+        }
+        [TestMethod]
+        [ExpectedException(typeof(GameOverException))]
+        public void Can_Throw_GameOver_Exception()
+        {
+            Rolls(1, 22);
+            game.GetScore();
+        }
+        [TestMethod]
+        public void Can_Roll_OneStrike_And_OneSpare()
+        {
+            // Act
+            Rolls(0, 9);
+            Roll_Strikes();
+            Roll_Spares(5);
+            Rolls(0, 8);
+
+            // Assert
+            Assert.AreEqual(25, game.GetScore());
+        }
+        [TestMethod]
+        public void Can_Roll_Only_OneStrike()
+        {
+            // Act
+            Rolls(0, 9);
+            Roll_Strikes();
+            Rolls(0, 10);
+
+            // Assert
+            Assert.AreEqual(10, game.GetScore());
+        }
+
+        [TestMethod]
+        public void Can_Roll_Only_OneSpare_On_last_Frame()
+        {
+            // Act
+            Rolls(0, 18);
+            game.LastRoll(1,2,0);
+            // Assert
+            Assert.AreEqual(3, game.GetScore());
+        }
+        [TestMethod]
+        public void Can_Roll_AllStrike_And_OneSpare_On_last_Frame()
+        {
+            // Act
+            //Rolls(0, 18);
+            Roll_Strikes(9);
+            //Roll_Spares(5);
+            //game.LastRoll(10, 5, 5);
+            game.LastRoll(10, 1, 9);
+            // Assert
+            Assert.AreEqual(281, game.GetScore());
         }
 
         /// <summary>
@@ -66,5 +131,18 @@ namespace BowlingBall.Tests
                 game.Roll(pins);
             }
         }
+        private void Roll_Strikes(int times = 1)
+        {
+            for (int i = 0; i < times; i++)
+            {
+                game.Roll(10);
+            }
+        }
+        private void Roll_Spares(int firstRollPins) 
+        {
+            game.Roll(firstRollPins);
+            game.Roll(10 - firstRollPins);
+        }
+
     }
 }
