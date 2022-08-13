@@ -8,15 +8,19 @@ namespace BowlingBall
 {
     public class Game
     {
+        private int Score { get; set; }
+
         public void Roll(int pins)
         {
-            // Add your logic here. Add classes as needed.
+            Score += pins;
         }
+
+
 
         public int GetScore()
         {
             // Returns the final score of the game.
-            return 0;
+            return Score;
         }
     }
 }

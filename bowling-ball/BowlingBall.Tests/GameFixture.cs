@@ -6,15 +6,42 @@ namespace BowlingBall.Tests
     [TestClass]
     public class GameFixture
     {
-        [TestMethod]
-        public void Gutter_game_score_should_be_zero_test()
+        private Game game;
+        [TestInitialize]
+        public void Initialize()
         {
-            var game = new Game();
-            Roll(game, 0, 20);
+            game = new Game();
+        }
+
+        [TestMethod]
+        public void Can_Roll_All_Gutter()
+        {
+            Rolls(0, 20);
             Assert.AreEqual(0, game.GetScore());
         }
 
-        private void Roll(Game game, int pins, int times)
+        //[TestMethod]
+        //public void Can_Roll_Spare()
+        //{
+        //    game.Roll(5);
+        //    game.Roll(5);
+        //    game.Roll(5);
+        //    Rolls(0, 17); 
+        //    Assert.AreEqual(20, game.GetScore());
+        //}
+        [TestMethod]
+        public void Can_Roll_All_Ones()
+        {
+            Rolls(1, 20);
+            Assert.AreEqual(20, game.GetScore());
+        }
+
+        /// <summary>
+        /// Roll multiple times
+        /// </summary>
+        /// <param name="pins">pin drop for each bowl</param>
+        /// <param name="times">number of times bowl</param>
+        private void Rolls(int pins, int times)
         {
             for (int i = 0; i < times; i++)
             {
