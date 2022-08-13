@@ -20,20 +20,38 @@ namespace BowlingBall.Tests
             Assert.AreEqual(0, game.GetScore());
         }
 
-        //[TestMethod]
-        //public void Can_Roll_Spare()
-        //{
-        //    game.Roll(5);
-        //    game.Roll(5);
-        //    game.Roll(5);
-        //    Rolls(0, 17); 
-        //    Assert.AreEqual(20, game.GetScore());
-        //}
+        [TestMethod]
+        public void Can_Roll_Spare()
+        {
+            game.Roll(5);
+            game.Roll(5);
+            game.Roll(5);
+            Rolls(0, 17);
+            Assert.AreEqual(20, game.GetScore());
+        }
+
+        [TestMethod]
+        public void Can_Roll_Strike()
+        {
+            game.Roll(10);
+            game.Roll(3);
+            game.Roll(4); 
+            Rolls(0, 16);
+            Assert.AreEqual(24, game.GetScore());
+        }
+
         [TestMethod]
         public void Can_Roll_All_Ones()
         {
             Rolls(1, 20);
             Assert.AreEqual(20, game.GetScore());
+        }
+
+        [TestMethod]
+        public void Can_Roll_All_Strike()
+        {
+            Rolls(10, 12);
+            Assert.AreEqual(300, game.GetScore());
         }
 
         /// <summary>
