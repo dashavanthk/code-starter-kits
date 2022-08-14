@@ -43,6 +43,7 @@
   <ItemGroup>
     <Compile Include="Configs\Config.cs" />
     <Compile Include="Exceptions\GameOverException.cs" />
+    <Compile Include="Frames\Final.cs" />
     <Compile Include="Frames\Frame.cs" />
     <Compile Include="Frames\FrameProvider.cs" />
     <Compile Include="Frames\Regular.cs" />
