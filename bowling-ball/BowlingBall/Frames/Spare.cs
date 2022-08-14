@@ -15,6 +15,7 @@ namespace BowlingBall.Frames
 
         public override int FrameScore(int index)
         {
+            if(_track.GetPinDropsByRollIndex(index + 2)==-1) return 0;
             return _track.GetPinDropsByRollIndex(index + 2) + Config.Points;
         }
     }

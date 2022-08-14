@@ -9,6 +9,7 @@ namespace BowlingBall.Track
     public interface ITrackPins
     {
         int TotalRolls { get; }
+        int LastFramePin { get; set; }
         void SaveRoll(int pins);
         void SaveLastRoll(int firstRoll, int secondRoll, int thirdRoll);
         int GetPinDropsByRollIndex(int rollIndex);

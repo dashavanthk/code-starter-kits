@@ -35,6 +35,8 @@ namespace BowlingBall.Score
                 finalScore += instance.FrameScore(i);
                 i += instance.FramesCount;
             }
+            if (_track.LastFramePin != 0)
+                finalScore += _track.LastFramePin;
             return finalScore;
         }
 
